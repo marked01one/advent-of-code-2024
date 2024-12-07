@@ -1,5 +1,8 @@
 from collections import defaultdict
-import re
+import re, sys
+
+sys.setrecursionlimit(5000)
+sys.set_int_max_str_digits(10000)
 
 def problem_01(puzzle_input: str):
     fp = open(puzzle_input, "r")
@@ -201,12 +204,96 @@ def problem_05(puzzle_input: str = "../05.txt"):
     for update in unqualified_updates:
         pass
     
-     
-    
-    
-    
-    
     return result_A, result_B 
 
-problem_05() 
+
+def problem_06(puzzle_input: str = "../06.txt"):
+    result_A, result_B = 1, 0
+    
+    fp = open(puzzle_input, 'r')
+    
+    matrix = [list(line.replace('\n', '')) for line in fp.readlines()]
+    
+    def turn(x: int, y: int):
+        if x == -1 and y == 0: return 0, 1
+        if x == 0 and y == 1: return 1, 0
+        if x == 1 and y == 0: return 0, -1
+        if x == 0 and y == -1: return -1, 0
+        
+    
+    guard = (-1, -1)
+    direction = (-1, 0)
+    
+    for i in range(len(matrix)):
+        for j in range(len(matrix[i])):
+            if matrix[i][j] == '^':
+                guard = (i, j)
+                break
+            
+    while (0 <= guard[0] and guard[0] < len(matrix)) and (0 <= guard[1] and guard[1] < len(matrix[0])):
+        next = (guard[0]+direction[0], guard[1]+direction[1])
+        
+        if (0 <= next[0] and next[0] < len(matrix)) and (0 <= next[1] and next[1] < len(matrix[0])):
+            if matrix[next[0]][next[1]] == '#': 
+                direction = turn(direction[0], direction[1])
+                next = (guard[0]+direction[0], guard[1]+direction[1])
+        
+        if matrix[guard[0]][guard[1]] == '.': result_A += 1
+        matrix[guard[0]][guard[1]] = 'X'    
+        guard = next 
+   
+   
+    print(result_A)
+    
+    return result_A, result_B
+
+
+def problem_07(puzzle_input: str = "../07.txt"):
+    result_A, result_B = 0, 0
+    
+    fp = open(puzzle_input, 'r')
+    
+    tracker = defaultdict(list)
+    
+    for line in fp.readlines():
+        key = int(line.split(':')[0])
+        values = [int(i) for i in line.split(':')[1].strip().split(' ')]
+        tracker[key] = values
+    
+    fp.close()
+    
+    def traverse_A(arr, idx, total, target):
+        if idx == len(arr)-1: 
+            add_val = total + arr[idx]
+            mul_val = total * arr[idx]
+            return (add_val == target) or (mul_val == target)
+        else:
+            add = traverse_A(arr, idx+1, total+arr[idx], target) 
+            mul = traverse_A(arr, idx+1, total*arr[idx], target)
+            return add or mul
+    
+    for k,v in tracker.items():
+        if traverse_A(v, 0, 0, k): result_A += k
+        
+   
+    def traverse_B(arr, idx, total, target):
+        if idx == len(arr)-1:
+            add_val = total + arr[idx]
+            mul_val = total * arr[idx]
+            cat_val = int(str(total) + str(arr[idx]))
+            return add_val == target or mul_val == target or cat_val == target
+        else:
+            add = traverse_B(arr, idx+1, total+arr[idx], target)
+            mul = traverse_B(arr, idx+1, total*arr[idx], target)
+            cat = traverse_B(arr, idx+1, int(str(total)+str(arr[idx])), target)
+            return add or mul or cat
+   
+    for k, v in tracker.items():
+        if traverse_B(v, 0 ,0, k): result_B += k
+    
+    print(result_B)
+    
+    return result_A, result_B
+
+problem_07() 
         
