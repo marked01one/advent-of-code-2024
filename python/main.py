@@ -1,64 +1,9 @@
-from collections import defaultdict
-import re, sys
+from collections import defaultdict, deque
+import solutions
+import re
 
+import solutions.problem_08
 
-def problem_01(puzzle_input: str) -> tuple[int]:
-    fp = open(puzzle_input, "r")
-    lines: list[str] = fp.readlines()
-    fp.close()
-
-    left, right = [], []
-
-    for line in lines:
-        l, r = line.split("   ")
-        left.append(int(l))
-        right.append(int(r))
-
-    left.sort()
-    right.sort()
-
-    result_A = sum([abs(left[i]-right[i]) for i in range(len(left))])
-
-    frequency = defaultdict(int)
-
-    for num in right: frequency[num] += 1
-
-    result_B = sum([num * frequency[num] for n in set(left)])
-
-    return result_A, result_B
-
-
-def problem_02(puzzle_input: str = "../02.txt"):
-    fp = open(puzzle_input, "r")
-    matrix = [ 
-        [int(num) for num in line.split(' ')]
-        for line in fp.readlines()
-    ]
-    
-    result_A, result_B = 0, 0
-    
-    def safety(line: list[int]) -> bool:
-        increasing = line[0] < line[1]
-        
-        for i in range(1, len(line)):
-            diff = line[i] - line[i-1] if increasing else line[i-1] - line[i]
-            if diff > 3 or diff < 1: return False     
-        
-        return True
-    
-    for report in matrix:
-        if safety(report):
-            result_A += 1
-            result_B += 1
-            continue
-        
-        for i in range(len(report)):
-            if safety(report[i+1:]):
-                result_B += 1
-                break
-    
-    return result_A, result_B
-    
 
 def problem_03(puzzle_input: str = "../03.txt"):
     REGEX = r"do\(\)|don't\(\)|mul\(\d+,\d+\)"
@@ -102,15 +47,12 @@ def problem_03(puzzle_input: str = "../03.txt"):
     enabled = True
     
     for instruction in memory:
-        match instruction:
-            case "don't()": enabled = False
-            case "do()": enabled = True
-            case _: 
-                if enabled:
-                    num1, num2 = instruction[4:len(instruction)-1].split(',')
-                    result_B += int(num1) * int(num2)
+        num1, num2 = instruction[4:len(instruction)-1].split(',')
+        result_B += int(num1) * int(num2) if enabled else 0    
+    
+        if instruction == "don't()": enabled = False
+        if instruction == "do()": enabled = True
              
-    print(result_B)        
     
     return result_A, result_B  
     
@@ -295,5 +237,8 @@ def problem_07(puzzle_input: str = "../07.txt"):
     
     return result_A, result_B
 
-print(problem_02()) 
+
+
+
+print(solutions.problem_08.template("../08.txt")) 
         
