@@ -1,8 +1,6 @@
 from collections import defaultdict
 import re, sys
 
-sys.setrecursionlimit(5000)
-sys.set_int_max_str_digits(10000)
 
 def problem_01(puzzle_input: str):
     fp = open(puzzle_input, "r")
@@ -48,16 +46,14 @@ def problem_02(puzzle_input: str = "../02.txt"):
         
         return True
     
-    for report in matrix: 
-        if safety(report): result_A += 1
-    
     for report in matrix:
-        if safety(report): 
+        if safety(report):
+            result_A += 1
             result_B += 1
             continue
         
         for i in range(len(report)):
-            if safety(report[:i] + report[i+1:]):
+            if safety(report[i+1:]):
                 result_B += 1
                 break
     
@@ -263,6 +259,8 @@ def problem_07(puzzle_input: str = "../07.txt"):
     fp.close()
     
     def traverse_A(arr, idx, total, target):
+        if total > target: return False
+        
         if idx == len(arr)-1: 
             add_val = total + arr[idx]
             mul_val = total * arr[idx]
@@ -275,8 +273,10 @@ def problem_07(puzzle_input: str = "../07.txt"):
     for k,v in tracker.items():
         if traverse_A(v, 0, 0, k): result_A += k
         
-   
+
     def traverse_B(arr, idx, total, target):
+        if total > target: return False
+        
         if idx == len(arr)-1:
             add_val = total + arr[idx]
             mul_val = total * arr[idx]
@@ -295,5 +295,5 @@ def problem_07(puzzle_input: str = "../07.txt"):
     
     return result_A, result_B
 
-problem_07() 
+print(problem_02()) 
         
