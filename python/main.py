@@ -2,7 +2,7 @@ from collections import defaultdict
 import re, sys
 
 
-def problem_01(puzzle_input: str):
+def problem_01(puzzle_input: str) -> tuple[int]:
     fp = open(puzzle_input, "r")
     lines: list[str] = fp.readlines()
     fp.close()
