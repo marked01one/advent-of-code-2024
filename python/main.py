@@ -2,7 +2,8 @@ from collections import defaultdict, deque
 import solutions
 import re
 
-import solutions.problem_08
+import solutions.problem_06
+import solutions.problem_09
 
 
 def problem_03(puzzle_input: str = "../03.txt"):
@@ -145,45 +146,7 @@ def problem_05(puzzle_input: str = "../05.txt"):
     return result_A, result_B 
 
 
-def problem_06(puzzle_input: str = "../06.txt"):
-    result_A, result_B = 1, 0
-    
-    fp = open(puzzle_input, 'r')
-    
-    matrix = [list(line.replace('\n', '')) for line in fp.readlines()]
-    
-    def turn(x: int, y: int):
-        if x == -1 and y == 0: return 0, 1
-        if x == 0 and y == 1: return 1, 0
-        if x == 1 and y == 0: return 0, -1
-        if x == 0 and y == -1: return -1, 0
-        
-    
-    guard = (-1, -1)
-    direction = (-1, 0)
-    
-    for i in range(len(matrix)):
-        for j in range(len(matrix[i])):
-            if matrix[i][j] == '^':
-                guard = (i, j)
-                break
-            
-    while (0 <= guard[0] and guard[0] < len(matrix)) and (0 <= guard[1] and guard[1] < len(matrix[0])):
-        next = (guard[0]+direction[0], guard[1]+direction[1])
-        
-        if (0 <= next[0] and next[0] < len(matrix)) and (0 <= next[1] and next[1] < len(matrix[0])):
-            if matrix[next[0]][next[1]] == '#': 
-                direction = turn(direction[0], direction[1])
-                next = (guard[0]+direction[0], guard[1]+direction[1])
-        
-        if matrix[guard[0]][guard[1]] == '.': result_A += 1
-        matrix[guard[0]][guard[1]] = 'X'    
-        guard = next 
-   
-   
-    print(result_A)
-    
-    return result_A, result_B
+
 
 
 def problem_07(puzzle_input: str = "../07.txt"):
@@ -240,5 +203,5 @@ def problem_07(puzzle_input: str = "../07.txt"):
 
 
 
-print(solutions.problem_08.template("../08.txt")) 
+print(solutions.problem_09.template('../09.txt')) 
         
