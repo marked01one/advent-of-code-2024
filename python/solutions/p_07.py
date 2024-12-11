@@ -48,6 +48,5 @@ def template(puzzle_input: str) -> tuple[int]:
     for k, v in tracker.items():
         if traverse_B(v, 0 ,0, k): result_B += k
     
-    print(result_B)
     
     return result_A, result_B

@@ -26,7 +26,7 @@ def template(puzzle_input: str = "../02.txt"):
             continue
         
         for i in range(len(report)):
-            if safety(report[i+1:]):
+            if safety(report[:i] + report[i+1:]):
                 result_B += 1
                 break
     

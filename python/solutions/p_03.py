@@ -42,13 +42,15 @@ def template(puzzle_input: str) -> tuple[int]:
     
     memory: list[str] = re.findall(REGEX, memory)
     enabled = True
+   
     
     for instruction in memory:
+        if instruction == "don't()": enabled = False; continue
+        if instruction == "do()": enabled = True; continue
+        
         num1, num2 = instruction[4:len(instruction)-1].split(',')
         result_B += int(num1) * int(num2) if enabled else 0    
     
-        if instruction == "don't()": enabled = False
-        if instruction == "do()": enabled = True
              
     
     return result_A, result_B  
