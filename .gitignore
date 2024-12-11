@@ -1,1 +1,10 @@
+# Python
 python/solutions/__pycache__/*
+
+
+# Rust
+rust/debug/
+rust/target/
+rust/Cargo.lock
+rust/**/*.rs.bk
+rust/*.pdb
