@@ -1,7 +1,7 @@
 from collections import defaultdict
 
 
-def problem_02(puzzle_input: str = "../02.txt"):
+def template(puzzle_input: str = "../02.txt"):
     fp = open(puzzle_input, "r")
     matrix = [ 
         [int(num) for num in line.split(' ')]

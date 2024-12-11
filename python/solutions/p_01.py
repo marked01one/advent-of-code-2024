@@ -1,7 +1,7 @@
 from collections import defaultdict
 
 
-def problem_01(puzzle_input: str) -> tuple[int]:
+def template(puzzle_input: str) -> tuple[int]:
     fp = open(puzzle_input, "r")
     lines: list[str] = fp.readlines()
     fp.close()
