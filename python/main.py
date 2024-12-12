@@ -12,8 +12,8 @@ for file in problems:
 
 
 def main():
-    print("Test:", solutions[11]("test.txt"))
-    print(solutions[11]("../11.txt"))
+    #print("Test:", solutions[12]("test.txt"))
+    print(solutions[12]("../12.txt"))
 
 if __name__ == '__main__':
     main() 

@@ -9,7 +9,7 @@ def template(puzzle_input: str) -> tuple[int]:
     
     Xcoords, XMAScoords = [], []
     
-    def is_xmas(line): return 1 if ''.join(line) == 'XMAS' else 0
+    def is_xmas(line): return ''.join(line) == 'XMAS'
     
     for i in range(len(matrix)):
         for j in range(len(matrix[i])):

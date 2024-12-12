@@ -5,7 +5,6 @@ def template(puzzle_input: str) -> tuple[int]:
     result_A, result_B = 0, 0
    
     stream = open(puzzle_input, 'r').readline().replace('\n', '')
-    # stream = '2333133121414131402'
     blocks_A, blocks_B = [], []
     
     for i in range(len(stream)):

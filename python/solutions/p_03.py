@@ -12,7 +12,6 @@ def template(puzzle_input: str) -> tuple[int]:
     
     result_A, result_B = 0, 0
     
-    numbers = '1234567890'
     stages = ['', 'm', 'u', 'l', '(', numbers, ',', numbers, ')']
     num1, num2 = '', ''
     current = 0
@@ -25,14 +24,14 @@ def template(puzzle_input: str) -> tuple[int]:
         else:
             # If `i` is not the next stage BUT belongs to one of the variable stages
             # Remain at current stage
-            if (current == 5 or current == 7) and memory[i] in numbers: 
+            if (current == 5 or current == 7) and memory[i].isnumeric(): 
                 current = current
             else:
                 num1, num2 = '', ''
                 # Move current stage back to 1 if its `m`
-                if memory[i] == 'm': current = 1
                 # Reset current stage otherwise    
-                else: current = 0
+                current = memory[i] == 'm'
+                
             
         match current:
             case 8: result_A += int(num1) * int(num2); num1, num2 = '', ''; current = 0
@@ -49,7 +48,7 @@ def template(puzzle_input: str) -> tuple[int]:
         if instruction == "do()": enabled = True; continue
         
         num1, num2 = instruction[4:len(instruction)-1].split(',')
-        result_B += int(num1) * int(num2) if enabled else 0    
+        result_B += (int(num1) * int(num2)) * enabled    
     
              
     
