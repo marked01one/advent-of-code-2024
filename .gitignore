@@ -1,6 +1,7 @@
 # Python
 python/*/__pycache__/*
-
+python/env/*
+python/outputs/*
 
 # Rust
 rust/debug/
