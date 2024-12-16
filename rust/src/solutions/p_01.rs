@@ -1,8 +1,12 @@
 use std::collections::HashMap;
 use std::fs;
 
+use chrono::Utc;
 
-pub fn template(puzzle_input: &str) -> (i64, i64) {
+
+pub fn template(puzzle_input: &str) -> (i64, i64, i64) {
+    let start = Utc::now();
+
     let mut a: i64 = 0;
     let mut b: i64 = 0;
 
@@ -30,5 +34,9 @@ pub fn template(puzzle_input: &str) -> (i64, i64) {
         b += (arr1[i] * *hashmap.get(&arr1[i]).get_or_insert(&0)) as i64;
     }
 
-    return (a, b);
+    let span = (Utc::now()-start)
+        .num_microseconds()
+        .expect("Unable to get microsecond time delta!");
+
+    return (a, b, span);
 }

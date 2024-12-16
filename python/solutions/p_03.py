@@ -4,6 +4,8 @@ import re
 
 def template(puzzle_input: str) -> tuple[int]:
     REGEX = r"do\(\)|don't\(\)|mul\(\d+,\d+\)"
+    numbers = "0123456789"
+   
     
     fp = open(puzzle_input, 'r')
     memory = fp.read()

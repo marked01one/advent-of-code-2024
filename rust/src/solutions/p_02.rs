@@ -1,7 +1,10 @@
 use std::fs;
+use chrono::Utc;
 
 
-pub fn template(puzzle_input: &str) -> (i64, i64) {
+pub fn template(puzzle_input: &str) -> (i64, i64, i64) {
+    let start = Utc::now();
+
     let mut a: i64 = 0;
     let mut b: i64 = 0;
 
@@ -17,7 +20,9 @@ pub fn template(puzzle_input: &str) -> (i64, i64) {
 
         let line = splitted
             .iter()
-            .map(|x| x.trim().parse::<i64>()
+            .map(|x| x
+                .trim()
+                .parse::<i64>()
                 .expect(&format!("Failed to parse '{x}'!"))
             )
             .collect();
@@ -31,19 +36,22 @@ pub fn template(puzzle_input: &str) -> (i64, i64) {
         b += is_safe(&v) as i64;
 
         if !is_safe(&v) {
-            let mut safety = false;
             for i in 0..(v.len()-1) {
                 let new_vec: Vec<i64> = [&v[..i], &v[i+1..]].concat();
                 if is_safe(&new_vec) {
-                    safety = true;
+                    b += 1;
                     break;
                 }
             }
-            b += safety as i64;
         } 
         
     }
-    return (a, b);
+
+    let span = (Utc::now()-start)
+        .num_microseconds()
+        .expect("Unable to get microsecond time delta!");
+
+    return (a, b, span);
 }
 
 
