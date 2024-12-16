@@ -2,9 +2,9 @@ use std::collections::HashMap;
 use std::fs;
 
 
-pub fn template(puzzle_input: &str) -> (i32, i32) {
-    let mut a = 0;
-    let mut b = 0;
+pub fn template(puzzle_input: &str) -> (i64, i64) {
+    let mut a: i64 = 0;
+    let mut b: i64 = 0;
 
     let stream = fs::read_to_string(puzzle_input)
         .expect(&format!("Unable to parse file {}!", puzzle_input));
@@ -26,8 +26,8 @@ pub fn template(puzzle_input: &str) -> (i32, i32) {
     for n2 in arr2.iter() { *hashmap.entry(*n2).or_insert(0) += 1 }
 
     for i in 0..arr1.len() {
-        a += (arr1[i]-arr2[i]).abs();
-        b += arr1[i] * *hashmap.get(&arr1[i]).get_or_insert(&0);
+        a += (arr1[i]-arr2[i]).abs() as i64;
+        b += (arr1[i] * *hashmap.get(&arr1[i]).get_or_insert(&0)) as i64;
     }
 
     return (a, b);
