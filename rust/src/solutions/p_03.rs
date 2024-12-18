@@ -1,22 +1,21 @@
-use std::fs;
 use chrono::Utc;
 use regex::Regex;
+use crate::utils::file::FileInput;
 
 
-pub fn template(input: &str) -> (i64, i64, i64) {
+pub fn template(path: &str) -> (i64, i64, i64) {
     let start = Utc::now();
 
     let mut a: i64 = 0;
     let mut b: i64 = 0;
 
-    let stream = fs::read_to_string(input)
-        .expect(&format!("Unable to read file from path: {input}!"));
+    let fp = FileInput::new(path);
     
     let re = Regex::new(r"do\(\)|don't\(\)|mul\(\d+,\d+\)")
         .expect("Unable to convert string to regex!");
     
     let matches: Vec<&str> = re
-        .find_iter(&stream)
+        .find_iter(&fp.stream)
         .map(|mat| mat.as_str())
         .collect();
 

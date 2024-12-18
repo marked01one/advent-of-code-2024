@@ -1,23 +1,21 @@
 use std::collections::HashMap;
-use std::fs;
-
 use chrono::Utc;
+use crate::utils::file::FileInput;
 
 
-pub fn template(puzzle_input: &str) -> (i64, i64, i64) {
+pub fn template(path: &str) -> (i64, i64, i64) {
     let start = Utc::now();
 
     let mut a: i64 = 0;
     let mut b: i64 = 0;
 
-    let stream = fs::read_to_string(puzzle_input)
-        .expect(&format!("Unable to parse file {}!", puzzle_input));
+    let fp = FileInput::new(path);
 
     let mut arr1: Vec<i32> = vec![];
     let mut arr2: Vec<i32> = vec![];
     let mut hashmap: HashMap<i32, i32> = HashMap::new();
     
-    for line in stream.split('\n') {
+    for line in fp.stream.split('\n') {
         let splitted: Vec<&str> = line.split("   ").collect();
         arr1.push(splitted[0].parse::<i32>().expect("Left element of line not found!"));
         arr2.push(splitted[1].parse::<i32>().expect("Right element of line not found!"));

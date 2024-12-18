@@ -2,7 +2,7 @@ use std::fs;
 
 
 pub struct FileInput {
-    stream: String
+    pub stream: String
 }
 
 impl FileInput {

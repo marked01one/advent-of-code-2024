@@ -1,22 +1,19 @@
-use std::fs;
 use chrono::Utc;
+use crate::utils::file::FileInput;
 
 
-pub fn template(puzzle_input: &str) -> (i64, i64, i64) {
+pub fn template(path: &str) -> (i64, i64, i64) {
     let start = Utc::now();
 
     let mut a: i64 = 0;
     let mut b: i64 = 0;
 
-    let stream: String = fs::read_to_string(puzzle_input)
-        .expect(&format!("Unable to parse file {}!", puzzle_input));
-
+    let fp = FileInput::new(path);
     let mut mat: Vec<Vec<i64>> = Vec::new();
 
-    for line in stream.split('\n') {
+    for line in fp.stream.split('\n') {
         let splitted: Vec<&str> = line.split(' ').collect();
         if splitted.is_empty() { continue; }
-
 
         let line = splitted
             .iter()
